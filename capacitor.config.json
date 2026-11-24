@@ -1,0 +1,11 @@
+{
+  "appId": "com.vocabwallet.app",
+  "appName": "محفظتي اليومية",
+  "webDir": ".",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}

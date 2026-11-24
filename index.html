@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1630">
+<title>محفظتي اليومية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0E1630;--card:#18213F;--card2:#222C4F;--ink:#F4EFE4;--muted:#8E98B5;--gold:#F2BE4B;--gold2:#FFD97A;--red:#E5584F;--line:#26315A;color-scheme:dark}
+body.light{--bg:#F5F2EA;--card:#FFFFFF;--card2:#EFEBE0;--ink:#1D2540;--muted:#6F7896;--gold:#E3A62C;--gold2:#F2BE4B;--red:#C94B43;--line:#E2DCCD;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;min-height:100vh;padding-top:env(safe-area-inset-top,0px)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:10px}
+.app{max-width:440px;margin:0 auto;padding:16px 18px 120px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;margin-bottom:18px}
+.top h2{flex:1;margin:0;text-align:center;font-size:19px;font-weight:600}
+.ibtn{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;color:var(--ink);flex-shrink:0}
+.ibtn.gold{background:var(--gold);color:#1D2540;border-radius:50%}
+.spacer{width:40px;flex-shrink:0}
+.brand{text-align:center;margin:12px 0 22px}
+.brand h1{font-size:26px;font-weight:700;margin:0}
+.sub{color:var(--gold);font-size:17px;margin:6px 0 0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 6px;text-align:center}
+.mini svg{color:var(--gold)}
+.mini .n{display:block;font-size:24px;font-weight:600;margin-top:4px}
+.mini .l{font-size:12px;color:var(--muted)}
+.gold-btn{width:100%;background:linear-gradient(var(--gold2),var(--gold));color:#1D2540;border-radius:999px;padding:15px;font-weight:600;display:flex;gap:8px;align-items:center;justify-content:center;margin:18px 0 26px}
+.sec{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500;color:var(--ink);margin:0 0 12px}
+.sec svg{color:var(--gold)}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 4px;text-align:center;font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
+.chip b{font-size:20px;color:var(--ink);font-weight:600}
+.chip.on{background:var(--gold);border-color:var(--gold)}
+.chip.on,.chip.on b{color:#1D2540}
+.pill{width:100%;background:linear-gradient(var(--gold2),var(--gold));color:#1D2540;border-radius:999px;padding:14px;font-weight:600;display:flex;gap:8px;justify-content:center;align-items:center;margin-bottom:14px}
+.input{width:100%;background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:14px;padding:13px 14px;font:inherit;outline:none}
+.input:focus{border-color:var(--gold)}
+.field label{display:block;font-size:14px;color:var(--muted);margin:16px 0 8px}
+.row{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 14px 14px 16px;margin-bottom:10px;width:100%;text-align:start}
+.txt{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
+.en{font-size:19px;font-weight:600;direction:ltr;text-align:left}
+.ar{color:var(--muted);font-size:14px}
+.tr{color:var(--gold);font-size:13px}
+.rt{font-size:16px;font-weight:500}
+.rs{font-size:13px;color:var(--muted)}
+.edit-ico{color:var(--gold)}
+.speak-ico{color:var(--gold)}
+.del-ico{color:var(--red)}
+.tag{background:var(--card2);color:var(--gold);border-radius:10px;padding:4px 10px;font-size:12px;flex-shrink:0}
+.ico-box{width:40px;height:40px;border-radius:12px;background:var(--card2);color:var(--gold);display:grid;place-items:center;flex-shrink:0}
+.empty{color:var(--muted);text-align:center;padding:28px 10px;font-size:15px;line-height:1.8}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
+.prog{display:flex;align-items:center;gap:18px}
+.prog h3{margin:0 0 6px;font-size:15px;font-weight:500}
+.prog .muted{color:var(--muted);font-size:13px}
+.prog strong{display:block;font-size:20px;font-weight:600;margin-top:4px}
+.donut{position:relative;width:96px;height:96px;flex-shrink:0}
+.donut svg{width:100%;height:100%}
+.donut b{position:absolute;inset:0;display:grid;place-items:center;font-size:20px;font-weight:600}
+.outline-btn{width:100%;border:1.5px solid var(--gold);color:var(--gold);border-radius:999px;padding:14px;font-weight:600;display:flex;gap:8px;justify-content:center;align-items:center;margin-top:18px}
+.nav{position:fixed;bottom:0;left:0;right:0;max-width:440px;margin:0 auto;display:flex;justify-content:space-around;background:var(--card);border-top:1px solid var(--line);padding:10px 6px calc(12px + env(safe-area-inset-bottom,0px))}
+.nav button{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:var(--muted);padding:4px 8px}
+.nav button.on{color:var(--gold)}
+.toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:12px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap;z-index:20}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+const KEY = 'vocab-wallet-v1';
+const THEME_KEY = 'vocab-theme';
+const AR_DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const P = {
+  home:'<path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+  stats:'<path d="M4 20V11M10 20V4M16 20v-8M22 20H2"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>',
+  back:'<path d="M19 12H5M12 19l-7-7 7-7"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  pencil:'<path d="M4 20h4L19 9l-4-4L4 16z"/>',
+  trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
+  cal:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/>',
+  book:'<path d="M4 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4zM20 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z"/>',
+  star:'<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2-4.5-4.4 6.2-.9z"/>',
+  save:'<path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/>',
+  x:'<path d="M18 6 6 18M6 6l12 12"/>',
+  chev:'<path d="m9 18 6-6-6-6"/>',
+  moon:'<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/>',
+  speaker:'<path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/>'
+};
+let usVoice = null;
+function pickVoice() {
+  if (!('speechSynthesis' in window)) return;
+  const vs = speechSynthesis.getVoices();
+  usVoice = vs.find(v => v.lang === 'en-US' && /Google|Microsoft|Samantha|Zira|Natural/i.test(v.name))
+    || vs.find(v => v.lang === 'en-US')
+    || vs.find(v => /^en/i.test(v.lang)) || null;
+}
+if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+let groupPlaying = false;
+function utter(text, onend) {
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
+  u.rate = 0.9;
+  u.pitch = 1;
+  if (usVoice) u.voice = usVoice;
+  if (onend) u.onend = onend;
+  speechSynthesis.speak(u);
+}
+function stopSpeech() {
+  groupPlaying = false;
+  if (window.AndroidBridge) { AndroidBridge.stop(); return; }
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+}
+window.__speakDone = () => { groupPlaying = false; };
+function copyText(text) {
+  if (window.AndroidBridge) { AndroidBridge.copy(text); return Promise.resolve(); }
+  return navigator.clipboard.writeText(text);
+}
+function speakWord(text) {
+  if (window.AndroidBridge) { stopSpeech(); AndroidBridge.speak(text); return; }
+  if (!('speechSynthesis' in window)) return toast('النطق غير مدعوم على هذا المتصفح');
+  stopSpeech();
+  utter(text);
+}
+function speakGroup(list) {
+  if (window.AndroidBridge && list.length) { groupPlaying = true; AndroidBridge.speakAll(JSON.stringify(list.map(w => w.en))); return; }
+  if (!list.length) return toast('لا توجد كلمات لنطقها');
+  if (!('speechSynthesis' in window)) return toast('النطق غير مدعوم على هذا المتصفح');
+  stopSpeech();
+  groupPlaying = true;
+  let i = 0;
+  const next = () => {
+    if (!groupPlaying || i >= list.length) { groupPlaying = false; return; }
+    utter(list[i++].en, next);
+  };
+  next();
+}
+function ic(n, s = 20) {
+  return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
+}
+
+let data = load();
+let st = { screen: 'home', date: null, addDate: null, editId: null, dayQ: '', sq: '' };
+
+function load() { try { const r = localStorage.getItem(KEY); return r ? JSON.parse(r) : {}; } catch (e) { return {}; } }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) { toast('تعذّر الحفظ في هذا المتصفح'); } }
+
+const $ = id => document.getElementById(id);
+const pad = n => String(n).padStart(2, '0');
+function keyOf(d) { return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; }
+function keyAgo(n) { const d = new Date(); d.setDate(d.getDate() - n); return keyOf(d); }
+function parseKey(k) { const [y, m, d] = k.split('-').map(Number); return new Date(y, m - 1, d); }
+function fmtFull(k) { return parseKey(k).toLocaleDateString('ar', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); }
+function wdName(k) { return AR_DAYS[parseKey(k).getDay()]; }
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+function newId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+function count(k) { return (data[k] || []).length; }
+function totalWords() { return Object.values(data).reduce((n, l) => n + l.length, 0); }
+function activeDays() { return Object.values(data).filter(l => l.length).length; }
+function streak() {
+  let n = count(keyAgo(0)) ? 0 : 1, s = 0;
+  while (count(keyAgo(n))) { s++; n++; }
+  return s;
+}
+function weekActive() { let c = 0; for (let i = 0; i < 7; i++) if (count(keyAgo(i))) c++; return c; }
+
+let toastTimer;
+function toast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function go(s, date) {
+  stopSpeech();
+  st.screen = s;
+  if (date !== undefined) st.date = date;
+  st.editId = null;
+  render();
+  window.scrollTo(0, 0);
+}
+
+function render() {
+  const screens = { home: scrHome, add: scrBulk, day: scrDay, search: scrSearch, stats: scrStats, settings: scrSettings };
+  const tabs = ['home', 'search', 'stats', 'settings', 'day'].includes(st.screen);
+  $('root').innerHTML = `<div class="app">${screens[st.screen]()}</div>${tabs ? navHtml() : ''}`;
+}
+
+function navHtml() {
+  const tabs = [['home', 'الرئيسية', 'home'], ['search', 'بحث', 'search'], ['stats', 'إحصائيات', 'stats'], ['settings', 'إعدادات', 'gear']];
+  return `<nav class="nav">${tabs.map(([k, label, icon]) => {
+    const on = st.screen === k || (st.screen === 'day' && k === 'home');
+    return `<button data-nav="${k}" class="${on ? 'on' : ''}">${ic(icon, 22)}<span>${label}</span></button>`;
+  }).join('')}</nav>`;
+}
+
+function topBar(title, right = '<span class="spacer"></span>', back = '<button class="ibtn" data-nav="home" aria-label="رجوع">' + ic('back') + '</button>') {
+  return `<div class="top">${right}<h2>${title}</h2>${back}</div>`;
+}
+
+function scrHome() {
+  const t = keyAgo(0);
+  const days = [0, 1, 2, 3].map(keyAgo);
+  const previous = Object.keys(data).filter(k => data[k].length && k !== t).sort().reverse();
+  return `
+    <div class="top">
+      <button class="ibtn" data-nav="stats" aria-label="إحصائيات">${ic('star', 22)}</button>
+      <span class="spacer"></span>
+      <button class="ibtn" data-nav="settings" aria-label="الإعدادات">${ic('gear', 22)}</button>
+    </div>
+    <div class="brand"><h1>محفظتي اليومية</h1><p class="sub">للكلمات الإنجليزية</p></div>
+    <div class="grid3">
+      <div class="mini">${ic('cal', 22)}<span class="n">${streak()}</span><span class="l">أيام متتالية</span></div>
+      <div class="mini">${ic('book', 22)}<span class="n">${totalWords()}</span><span class="l">كلمة محفوظة</span></div>
+      <div class="mini">${ic('star', 22)}<span class="n">${activeDays()}</span><span class="l">أيام مكتملة</span></div>
+    </div>
+    <button class="gold-btn" data-nav="add" data-fresh="1">${ic('plus', 18)} إضافة كلمة جديدة</button>
+    <h2 class="sec">${ic('cal', 16)} أيام الأسبوع</h2>
+    <div class="chips">${days.map(k => `
+      <button class="chip ${k === t ? 'on' : ''}" data-day="${k}">
+        <span>${wdName(k)}</span>
+        <b>${parseKey(k).getDate()}</b>
+        <span>${parseKey(k).toLocaleDateString('ar', { month: 'long' })}</span>
+      </button>`).join('')}
+    </div>
+    <h2 class="sec">${ic('book', 16)} الأيام السابقة</h2>
+    ${previous.length ? previous.map(k => `
+      <button class="row" data-day="${k}">
+        <div class="txt"><span class="rt">${fmtFull(k)}</span><span class="rs">${data[k].slice(0, 4).map(w => esc(w.en)).join('، ')}</span></div>
+        <span class="tag">${count(k)} كلمة</span>
+      </button>`).join('') : `<p class="empty">ستظهر أيامك السابقة هنا بعد أن تضيف كلماتها.</p>`}`;
+}
+
+function scrAdd() {
+  const dv = st.addDate || keyAgo(0);
+  return topBar('إضافة كلمة جديدة',
+    `<button class="ibtn gold" data-act="save-new" aria-label="حفظ">${ic('plus', 20)}</button>`,
+    '<button class="ibtn" data-nav="home" aria-label="رجوع">' + ic('back') + '</button>') + `
+    <div class="field"><label>الكلمة الإنجليزية:</label>
+      <input id="en" class="input" dir="ltr" placeholder="أدخل الكلمة هنا..." autocomplete="off"></div>
+    <div class="field"><label>معناها بالعربية:</label>
+      <input id="ar" class="input" placeholder="أدخل المعنى هنا..." autocomplete="off"></div>
+    <div class="field"><label>اختر اليوم:</label>
+      <input id="dt" type="date" class="input" dir="ltr" value="${dv}"></div>
+    <button class="gold-btn" data-act="save-new">${ic('save', 18)} حفظ الكلمة</button>`;
+}
+
+function parseLine(line) {
+  let parts = line.split(/\s*[|\t;]\s*|\s+[-–—]\s+/).map(s => s.trim()).filter(Boolean);
+  if (parts.length < 2) parts = line.split(/\s{2,}/).map(s => s.trim()).filter(Boolean);
+  if (parts.length < 2) {
+    const m = line.match(/^([A-Za-z][A-Za-z'\- ]*?)\s+([\u0600-\u06FF].*)$/);
+    if (m) parts = [m[1], m[2]];
+  }
+  let en = '';
+  const ar = [];
+  for (const p of parts) {
+    if (!en && /[A-Za-z]/.test(p)) en = p;
+    else if (/[\u0600-\u06FF]/.test(p)) ar.push(p);
+  }
+  return { en, ar: ar[0] || '', tr: ar[1] || '', raw: line, ok: !!en && !!ar[0] };
+}
+function parseAll(text) {
+  return text.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(parseLine);
+}
+function previewHtml() {
+  const rows = parseAll(st.bulkText || '');
+  if (!rows.length) return '';
+  const ok = rows.filter(r => r.ok).length;
+  const bad = rows.length - ok;
+  return `<p class="rs" style="margin:0 0 10px">${ok} كلمة جاهزة${bad ? ' · ' + bad + ' سطر غير مكتمل' : ''}</p>` +
+    rows.slice(0, 60).map(r => r.ok ? `
+      <div class="row" style="padding:10px 14px"><div class="txt"><span class="en" style="font-size:16px">${esc(r.en)}</span><span class="ar">${esc(r.ar)}</span>${r.tr ? `<span class="tr">${esc(r.tr)}</span>` : ''}</div></div>` : `
+      <div class="row" style="padding:10px 14px;border-color:var(--red)"><div class="txt"><span class="rs">${esc(r.raw)}</span><span class="rs" style="color:var(--red)">يحتاج إلى الإنجليزية والمعنى</span></div></div>`).join('') +
+    (rows.length > 60 ? `<p class="rs">تظهر أول 60 كلمة في المعاينة فقط، وتُحفظ كل الكلمات.</p>` : '');
+}
+function scrBulk() {
+  const dv = st.addDate || keyAgo(0);
+  return topBar('إضافة مجموعة') + `
+    <p class="rs" style="line-height:1.9;margin:0 0 12px">ألصق الكلمات دفعة واحدة، سطر لكل كلمة. الأفضل بهذا الترتيب: الإنجليزية | المعنى العربي | النطق بالعربي. يتعرّف التطبيق على كل جزء تلقائيًا.</p>
+    <textarea id="bulk" class="input" rows="8" dir="auto" style="resize:vertical;margin-bottom:12px" placeholder="Hello | مرحباً | هالو">${esc(st.bulkText || '')}</textarea>
+    <div id="prev">${previewHtml()}</div>
+    <div class="field"><label>يوم المذاكرة:</label>
+      <input id="dt" type="date" class="input" dir="ltr" value="${dv}"></div>
+    <button class="gold-btn" data-act="save-bulk">${ic('save', 18)} حفظ المجموعة كاملة</button>`;
+}
+function saveBulk() {
+  const rows = parseAll(st.bulkText || '').filter(r => r.ok);
+  if (!rows.length) return toast('لا توجد كلمات صالحة للحفظ');
+  const dt = $('dt').value || keyAgo(0);
+  const list = data[dt] || (data[dt] = []);
+  let added = 0, skipped = 0;
+  for (const r of rows) {
+    if (list.some(w => w.en.toLowerCase() === r.en.toLowerCase())) { skipped++; continue; }
+    list.push({ id: newId(), en: r.en, ar: r.ar, tr: r.tr, t: Date.now() + added });
+    added++;
+  }
+  save();
+  st.bulkText = '';
+  st.dayQ = '';
+  go('day', dt);
+  toast(`تمت إضافة ${added} كلمة` + (skipped ? `، وتجاهل ${skipped} مكررة` : ''));
+}
+
+function scrDay() {
+  const k = st.date || keyAgo(0);
+  return topBar('كلمات يوم ' + wdName(k),
+    `<button class="ibtn" data-act="add-for" aria-label="إضافة">${ic('plus', 20)}</button>`) + `
+    <div class="pill">${ic('cal', 18)} ${fmtFull(k)}</div>
+    <button class="outline-btn" data-act="copy-group" style="margin:0 0 14px">${ic('copy', 18)} نسخ المجموعة كاملة</button>
+    <button class="outline-btn" data-act="speak-group" style="margin:0 0 14px">${ic('speaker', 18)} استماع للمجموعة كاملة</button>
+    <input id="dq" class="input" placeholder="ابحث في كلمات اليوم..." value="${esc(st.dayQ)}" style="margin-bottom:14px">
+    <div id="dlist">${dayList()}</div>`;
+}
+
+function dayList() {
+  const q = st.dayQ.trim().toLowerCase();
+  const words = (data[st.date] || []).filter(w => !q || w.en.toLowerCase().includes(q) || w.ar.includes(q));
+  if (!words.length) return `<p class="empty">${(data[st.date] || []).length ? 'لا توجد نتائج مطابقة.' : 'لا توجد كلمات في هذا اليوم بعد.'}</p>`;
+  return words.map(w => st.editId === w.id ? editRow(w) : `
+    <div class="row">
+      <div class="txt"><span class="en">${esc(w.en)}</span><span class="ar">${esc(w.ar)}</span>${w.tr ? `<span class="tr">${esc(w.tr)}</span>` : ''}</div>
+      <button class="ibtn speak-ico" data-act="speak" data-id="${w.id}" aria-label="استماع">${ic('speaker', 18)}</button>
+      <button class="ibtn edit-ico" data-act="edit" data-id="${w.id}" aria-label="تعديل">${ic('pencil', 18)}</button>
+      <button class="ibtn del-ico" data-act="del" data-id="${w.id}" aria-label="حذف">${ic('trash', 18)}</button>
+    </div>`).join('');
+}
+
+function editRow(w) {
+  return `
+    <div class="row">
+      <div class="txt" style="gap:8px">
+        <input class="input" dir="ltr" id="ee-${w.id}" value="${esc(w.en)}" aria-label="الكلمة">
+        <input class="input" id="ar-${w.id}" value="${esc(w.ar)}" aria-label="المعنى">
+        <input class="input" id="tr-${w.id}" value="${esc(w.tr || '')}" aria-label="النطق بالعربي">
+      </div>
+      <button class="ibtn edit-ico" data-act="save-edit" data-id="${w.id}" aria-label="حفظ">${ic('save', 18)}</button>
+      <button class="ibtn" data-act="cancel" aria-label="إلغاء">${ic('x', 18)}</button>
+    </div>`;
+}
+
+function scrSearch() {
+  return topBar('البحث عن كلمة', '<span class="spacer"></span>', '<span class="spacer"></span>') + `
+    <input id="sq" class="input" placeholder="أدخل كلمة للبحث..." value="${esc(st.sq)}" style="margin-bottom:14px">
+    <div id="sres">${searchList()}</div>`;
+}
+
+function searchList() {
+  const q = st.sq.trim().toLowerCase();
+  if (!q) return `<p class="empty">اكتب كلمة للبحث في كل أيامك.</p>`;
+  const res = [];
+  for (const date of Object.keys(data)) for (const w of data[date]) {
+    if (w.en.toLowerCase().includes(q) || w.ar.includes(q)) res.push({ date, w });
+  }
+  if (!res.length) return `<p class="empty">لا توجد نتائج لـ “${esc(st.sq.trim())}”.</p>`;
+  res.sort((a, b) => b.date.localeCompare(a.date));
+  return res.map(({ date, w }) => `
+    <button class="row" data-day="${date}">
+      <div class="txt"><span class="en">${esc(w.en)}</span><span class="ar">${esc(w.ar)}</span></div>
+      <span class="tag">${wdName(date)}</span>
+      ${ic('chev', 16)}
+    </button>`).join('');
+}
+
+function scrStats() {
+  const wk = weekActive();
+  const pct = Math.round(wk / 7 * 100);
+  const C = 2 * Math.PI * 40;
+  const days = [6, 5, 4, 3, 2, 1, 0].map(keyAgo);
+  const vals = days.map(count);
+  const max = Math.max(1, ...vals);
+  const bars = vals.map((v, i) => {
+    const h = Math.round(v / max * 100);
+    const x = 12 + i * 46;
+    return `<rect x="${x}" y="${120 - h}" width="28" height="${h}" rx="7" fill="var(--gold)"/>
+      <text x="${x + 14}" y="${112 - h}" text-anchor="middle" style="fill:var(--ink);font-size:12px">${v}</text>
+      <text x="${x + 14}" y="150" text-anchor="middle" style="fill:var(--muted);font-size:11px">${AR_DAYS[parseKey(days[i]).getDay()]}</text>`;
+  }).join('');
+  return topBar('إحصائياتي', `<span class="ico-box" style="width:36px;height:36px">${ic('stats', 18)}</span>`) + `
+    <div class="grid3" style="margin-bottom:14px">
+      <div class="mini">${ic('star', 22)}<span class="n">${activeDays()}</span><span class="l">أيام مكتملة</span></div>
+      <div class="mini">${ic('book', 22)}<span class="n">${totalWords()}</span><span class="l">كلمة محفوظة</span></div>
+      <div class="mini">${ic('cal', 22)}<span class="n">${streak()}</span><span class="l">أيام متتالية</span></div>
+    </div>
+    <div class="card prog">
+      <div class="donut">
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="var(--line)" stroke-width="10"/>
+          <circle cx="50" cy="50" r="40" fill="none" stroke="var(--gold)" stroke-width="10" stroke-linecap="round"
+            stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - wk / 7)}" transform="rotate(-90 50 50)"/>
+        </svg>
+        <b>${pct}%</b>
+      </div>
+      <div>
+        <h3>تقدمك هذا الأسبوع</h3>
+        <span class="muted">أيام نشطة</span>
+        <strong>${wk} من 7</strong>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="margin:0 0 10px;font-size:15px;font-weight:500">الكلمات حسب اليوم</h3>
+      <svg viewBox="0 0 330 160" width="100%" role="img" aria-label="عدد الكلمات لكل يوم">${bars}</svg>
+    </div>`;
+}
+
+function scrSettings() {
+  const dark = !document.body.classList.contains('light');
+  return topBar('الإعدادات') + `
+    <div class="row">
+      <span class="ico-box">${ic('moon', 18)}</span>
+      <div class="txt"><span class="rt">مظهر التطبيق</span><span class="rs">الوضع الليلي</span></div>
+      <input type="checkbox" id="theme" ${dark ? 'checked' : ''} style="accent-color:var(--gold);width:22px;height:22px" aria-label="الوضع الليلي">
+    </div>
+    <div class="row">
+      <span class="ico-box">${ic('globe', 18)}</span>
+      <div class="txt"><span class="rt">اللغة</span><span class="rs">العربية</span></div>
+    </div>
+    <button class="row" data-act="backup">
+      <span class="ico-box">${ic('copy', 18)}</span>
+      <div class="txt"><span class="rt">النسخ الاحتياطي</span><span class="rs">انسخ كل بياناتك إلى الحافظة</span></div>
+      ${ic('chev', 16)}
+    </button>
+    <div class="row">
+      <span class="ico-box">${ic('info', 18)}</span>
+      <div class="txt"><span class="rt">حول التطبيق</span><span class="rs">الإصدار 1.0.0</span></div>
+    </div>
+    <button class="outline-btn" data-act="clear">${ic('trash', 18)} مسح جميع البيانات</button>`;
+}
+
+// Clicks
+document.addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  const { nav, day, act, id, fresh } = b.dataset;
+
+  if (nav) {
+    if (fresh) st.addDate = null;
+    return go(nav);
+  }
+  if (day) { st.dayQ = ''; return go('day', day); }
+
+  switch (act) {
+    case 'speak': {
+      const w = (data[st.date] || []).find(x => x.id === id);
+      if (w) speakWord(w.en);
+      return;
+    }
+    case 'speak-group': {
+      if (groupPlaying) { stopSpeech(); return toast('تم إيقاف الاستماع'); }
+      return speakGroup(data[st.date] || []);
+    }
+    case 'save-bulk':
+      return saveBulk();
+    case 'copy-group': {
+      const list = data[st.date] || [];
+      if (!list.length) return toast('لا توجد كلمات لنسخها');
+      const text = list.map(w => [w.en, w.ar, w.tr].filter(Boolean).join(' | ')).join('\n');
+      if (!window.AndroidBridge && !navigator.clipboard) return toast('تعذّر النسخ على هذا المتصفح');
+      return copyText(text)
+        .then(() => toast(`تم نسخ ${list.length} كلمة`))
+        .catch(() => toast('تعذّر النسخ'));
+    }
+    case 'add-for':
+      st.addDate = st.date;
+      return go('add');
+    case 'save-new': {
+      const en = $('en').value.trim();
+      const ar = $('ar').value.trim();
+      const dt = $('dt').value || keyAgo(0);
+      if (!en || !ar) return toast('أدخل الكلمة ومعناها');
+      const list = data[dt] || (data[dt] = []);
+      if (list.some(w => w.en.toLowerCase() === en.toLowerCase())) return toast('هذه الكلمة موجودة في ذلك اليوم');
+      list.push({ id: newId(), en, ar, t: Date.now() });
+      save();
+      st.dayQ = '';
+      go('day', dt);
+      return toast('تمت الإضافة');
+    }
+    case 'edit':
+      st.editId = id;
+      return render();
+    case 'cancel':
+      st.editId = null;
+      return render();
+    case 'save-edit': {
+      const en = $('ee-' + id).value.trim();
+      const ar = $('ar-' + id).value.trim();
+      if (!en || !ar) return toast('أدخل الكلمة ومعناها');
+      const list = data[st.date];
+      if (list.some(w => w.id !== id && w.en.toLowerCase() === en.toLowerCase())) return toast('هذه الكلمة موجودة في ذلك اليوم');
+      const w = list.find(x => x.id === id);
+      w.en = en; w.ar = ar; w.tr = $('tr-' + id).value.trim();
+      st.editId = null;
+      save(); render();
+      return toast('تم التعديل');
+    }
+    case 'del':
+      if (!confirm('حذف هذه الكلمة؟')) return;
+      data[st.date] = data[st.date].filter(w => w.id !== id);
+      save(); render();
+      return toast('تم الحذف');
+    case 'backup':
+      if (!window.AndroidBridge && !navigator.clipboard) return toast('تعذّر النسخ على هذا المتصفح');
+      return copyText(JSON.stringify(data))
+        .then(() => toast('تم نسخ البيانات'))
+        .catch(() => toast('تعذّر النسخ'));
+    case 'clear':
+      if (!confirm('مسح كل الكلمات نهائيًا؟')) return;
+      data = {}; save(); render();
+      return toast('تم مسح البيانات');
+  }
+});
+
+// Live search inputs (update only the list, so focus stays)
+document.addEventListener('input', e => {
+  if (e.target.id === 'dq') { st.dayQ = e.target.value; $('dlist').innerHTML = dayList(); }
+  if (e.target.id === 'bulk') { st.bulkText = e.target.value; $('prev').innerHTML = previewHtml(); }
+  if (e.target.id === 'sq') { st.sq = e.target.value; $('sres').innerHTML = searchList(); }
+});
+
+// Theme toggle
+document.addEventListener('change', e => {
+  if (e.target.id !== 'theme') return;
+  document.body.classList.toggle('light', !e.target.checked);
+  try { localStorage.setItem(THEME_KEY, e.target.checked ? 'dark' : 'light'); } catch (err) {}
+});
+
+if (localStorage.getItem(THEME_KEY) === 'light') document.body.classList.add('light');
+render();
+</script>
+</body>
+</html>
